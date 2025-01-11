@@ -19,7 +19,7 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(CreateOrderingCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateOrderingCommand request, CancellationToken cancellationToken)
         {
             await _repository.CreateAsync(new Ordering
             {
@@ -27,7 +27,6 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
                 TotalPrice = request.TotalPrice,
                 UserId = request.UserId
             });
-            return Unit.Value;
         }
     }
 }

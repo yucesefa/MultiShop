@@ -17,12 +17,10 @@ namespace MultiShop.Order.Application.Features.Mediator.Handlers.OrderingHandler
         {
             _repository = repository;
         }
-        public async Task<Unit> Handle(RemoveOrderingCommand request, CancellationToken cancellationToken)
+        public async Task Handle(RemoveOrderingCommand request, CancellationToken cancellationToken)
         {
             var values = await _repository.GetByIdAsync(request.Id);
             await _repository.DeleteAsync(values);
-
-            return Unit.Value;
         }
     }
 }
