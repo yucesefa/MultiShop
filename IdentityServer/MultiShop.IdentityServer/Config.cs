@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -28,6 +29,18 @@ namespace MultiShop.IdentityServer
             new ApiScope("DiscountFullPermission","Full authority for discount operations"),
             new ApiScope("OrderFullPermisson","Full authority for order operations")
 
+        };
+        public static IEnumerable<Client> Clients => new Client[]
+        {
+                //Visitor
+                new Client
+                {
+                    ClientId = "MultiShopVisitorId",
+                    ClientName = "Multi Shop Visitor User",
+                    AllowedGrantTypes= GrantTypes.ClientCredentials,
+                    ClientSecrets = {new Secret("multishopsecret".Sha256())},
+                    AllowedScopes={"CatalogReadPermission"}
+                }
         };
     }
 }
