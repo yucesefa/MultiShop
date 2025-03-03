@@ -40,7 +40,33 @@ namespace MultiShop.IdentityServer
                     AllowedGrantTypes= GrantTypes.ClientCredentials,
                     ClientSecrets = {new Secret("multishopsecret".Sha256())},
                     AllowedScopes={"CatalogReadPermission"}
+                },
+
+                //Manager
+                new Client
+                {
+                ClientId="MultiShopManagerId",
+                ClientName="Multi Shop Manager User",
+                AllowedGrantTypes= GrantTypes.ClientCredentials,
+                ClientSecrets={new Secret("multishopsecret".Sha256()) },
+                AllowedScopes={ "CatalogReadPermission", "CatalogFullPermission" },
+                },
+                
+                //Admin
+                new Client
+                {
+                    ClientId="MultiShopAdminId",
+                    ClientName="Multi Shop Admin User",
+                    AllowedGrantTypes= GrantTypes.ClientCredentials,
+                    ClientSecrets={new Secret("multishopsecret".Sha256()) },
+                    AllowedScopes={ "CatalogFullPermission", "CatalogReadPermission", "DiscountFullPermission", "OrderFullPermisson",
+                    IdentityServerConstants.LocalApi.ScopeName,
+                    IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile },
+                    AccessTokenLifetime=600
                 }
+
         };
     }
 }
