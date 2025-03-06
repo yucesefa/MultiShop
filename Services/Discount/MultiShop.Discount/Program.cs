@@ -1,7 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MultiShop.Discount.Context;
 using MultiShop.Discount.Services.DiscountServices;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["IdentityServerUrl"]; // discount microservice identity server url üzerinde ayaða kalkacak
+    options.Audience = "ResourceDiscount";
+    options.RequireHttpsMetadata = false;
+});
 
 // Add services to the container.
 
@@ -23,6 +31,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();    
 
 app.UseAuthorization();
 
