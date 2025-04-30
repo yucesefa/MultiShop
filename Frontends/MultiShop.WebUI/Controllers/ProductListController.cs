@@ -5,12 +5,12 @@ namespace MultiShop.WebUI.Controllers
     public class ProductListController : Controller
     {
 
-        public IActionResult Index(/*string id*/)
+        public IActionResult Index(string id)
         {
             ViewBag.directory1 = "Ana Sayfa";
             ViewBag.directory2 = "Ürünler";
             ViewBag.directory3 = "Ürün Listesi";
-            //ViewBag.i = id;
+            ViewBag.i = id;
             return View();
         }
         public IActionResult ProductDetail(/*string id*/)

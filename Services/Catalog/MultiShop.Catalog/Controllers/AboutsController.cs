@@ -49,5 +49,6 @@ namespace MultiShop.Catalog.Controllers
             await _aboutService.UpdateAboutAsync(updateAboutDto);
             return Ok("Hakkımda alanı başarıyla güncellendi");
         }
+
     }
 }
