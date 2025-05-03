@@ -1,4 +1,4 @@
-﻿
+﻿@model CreateContactDto
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/_UILayout.cshtml";
@@ -26,21 +26,21 @@
                 <form method="post">
                     <div class="control-group">
                         <input type="text" class="form-control" id="name" placeholder="Adınız soyadınız"
-                               required="required" data-validation-required-message="Lütfen boş geçmeyin"  />
+                               required="required" data-validation-required-message="Lütfen boş geçmeyin" asp-for="NameSurname" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
                         <input type="email" class="form-control" id="email" placeholder="Email Adresiniz"
-                               required="required" data-validation-required-message="Lütfen boş geçmeyin"  />
+                               required="required" data-validation-required-message="Lütfen boş geçmeyin" asp-for="Email" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <input type="text" class="form-control" id="subject" placeholder="Mesaj Konusu"
+                        <input type="text" class="form-control" id="subject" placeholder="Mesaj Konusu" asp-for="Subject"
                                required="required" data-validation-required-message="Lütfen boş geçmeyin" />
                         <p class="help-block text-danger"></p>
                     </div>
                     <div class="control-group">
-                        <textarea class="form-control" rows="8" id="message" placeholder="Mesajınız" 
+                        <textarea class="form-control" rows="8" id="message" placeholder="Mesajınız" asp-for="Message"
                                   required="required"
                                   data-validation-required-message="Lütfen boş geçmeyin"></textarea>
                         <p class="help-block text-danger"></p>
@@ -57,4 +57,3 @@
 
     </div>
 </div>
-<!-- Contact End -->
