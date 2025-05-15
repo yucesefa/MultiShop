@@ -15,19 +15,73 @@ namespace MultiShop.WebUI.Services.Concrete
         private readonly HttpClient _httpClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ClientSettings _clientSettings;
+        private readonly ServiceApiSettings _serviceApiSettings;
 
-        public IdentityService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, IOptions<ClientSettings> clientSettings)
+        public IdentityService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, IOptions<ClientSettings> clientSettings, IOptions<ServiceApiSettings> serviceApiSettings)
         {
             _httpClient = httpClient;
             _httpContextAccessor = httpContextAccessor;
             _clientSettings = clientSettings.Value;
+            _serviceApiSettings = serviceApiSettings.Value; // artık adresleri manuel olarak vermeyeceğiz
+        }
+
+        public async Task<bool> GetRefreshToken()
+        {
+            var discoveryEndPoint = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
+            {
+                Address = _serviceApiSettings.IdentityServerUrl,
+                Policy =
+                {
+                    RequireHttps = false
+                }
+            });
+
+
+            var refreshToken = await _httpContextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
+
+            RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest
+            {
+                Address = discoveryEndPoint.TokenEndpoint,
+                ClientId = _clientSettings.MultiShopManagerClient.ClientId,
+                ClientSecret = _clientSettings.MultiShopManagerClient.ClientSecrets,
+                RefreshToken = refreshToken
+            };
+
+            var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
+
+            var authenticationToken = new List<AuthenticationToken>()
+            {
+           
+                new AuthenticationToken
+                {
+                    Name=OpenIdConnectParameterNames.AccessToken,
+                    Value=token.AccessToken
+                },
+                new AuthenticationToken
+                {
+                    Name=OpenIdConnectParameterNames.RefreshToken,
+                    Value=token.RefreshToken
+                },
+                new AuthenticationToken
+                {
+                    Name=OpenIdConnectParameterNames.ExpiresIn,
+                    Value=DateTimeOffset.UtcNow.AddSeconds(token.ExpiresIn).ToString()
+                }
+            };
+
+            var result = await _httpContextAccessor.HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme); //tekrar authenticate ediyoruz
+
+            var properties = result.Properties;
+            properties.StoreTokens(authenticationToken);
+            await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, result.Principal, properties); //yeni tokeni set ediyoruz
+            return true;
         }
 
         public async Task<bool> SignIn(SignInDto signInDto)
         {
             var discoveryEndPoint = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
-            { 
-                Address = "https://localhost:5001",
+            {
+                Address = _serviceApiSettings.IdentityServerUrl,
                 Policy =
                 {
                     RequireHttps = false
@@ -52,7 +106,7 @@ namespace MultiShop.WebUI.Services.Concrete
             };
 
             var userValues = await _httpClient.GetUserInfoAsync(userInfoRequest);
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userValues.Claims,CookieAuthenticationDefaults.AuthenticationScheme,"name","role");
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(userValues.Claims, CookieAuthenticationDefaults.AuthenticationScheme, "name", "role");
 
             ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
