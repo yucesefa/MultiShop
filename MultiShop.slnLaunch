@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Services\\Catalog\\MultiShop.Catalog\\MultiShop.Catalog.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "IdentityServer\\MultiShop.IdentityServer\\MultiShop.IdentityServer.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Frontends\\MultiShop.WebUI\\MultiShop.WebUI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ApiGateway\\MultiShop.OcelotGateway\\MultiShop.OcelotGateway.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

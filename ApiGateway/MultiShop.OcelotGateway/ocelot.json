@@ -18,8 +18,8 @@
         "AllowedScopes": [ "CatalogFullPermission" ]
       }
 
-
     },
+
     //Discount Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -38,8 +38,8 @@
         "AllowedScopes": [ "DiscountFullPermission" ]
       }
 
-
     },
+
     //Order Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -58,8 +58,8 @@
         "AllowedScopes": [ "OrderFullPermisson" ]
       }
 
-
     },
+
     //Cargo Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -79,6 +79,7 @@
       }
 
     },
+
     //Basket Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -97,8 +98,8 @@
         "AllowedScopes": [ "BasketFullPermission" ]
       }
 
-
     },
+
     //Comment Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -118,6 +119,7 @@
       }
 
     },
+
     //Payment Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -137,6 +139,7 @@
       }
 
     },
+
     //Images Mikroservis
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -155,9 +158,8 @@
         "AllowedScopes": [ "ImageFullPermission" ]
       }
     }
-
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
   }
-} 
+}

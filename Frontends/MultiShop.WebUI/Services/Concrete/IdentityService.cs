@@ -31,9 +31,9 @@ namespace MultiShop.WebUI.Services.Concrete
             {
                 Address = _serviceApiSettings.IdentityServerUrl,
                 Policy =
-                {
-                    RequireHttps = false
-                }
+                    {
+                        RequireHttps = false
+                    }
             });
 
 
@@ -43,33 +43,33 @@ namespace MultiShop.WebUI.Services.Concrete
             {
                 Address = discoveryEndPoint.TokenEndpoint,
                 ClientId = _clientSettings.MultiShopManagerClient.ClientId,
-                ClientSecret = _clientSettings.MultiShopManagerClient.ClientSecrets,
+                ClientSecret = _clientSettings.MultiShopManagerClient.ClientSecret,
                 RefreshToken = refreshToken
             };
 
             var token = await _httpClient.RequestRefreshTokenAsync(refreshTokenRequest);
 
             var authenticationToken = new List<AuthenticationToken>()
-            {
-           
-                new AuthenticationToken
                 {
-                    Name=OpenIdConnectParameterNames.AccessToken,
-                    Value=token.AccessToken
-                },
-                new AuthenticationToken
-                {
-                    Name=OpenIdConnectParameterNames.RefreshToken,
-                    Value=token.RefreshToken
-                },
-                new AuthenticationToken
-                {
-                    Name=OpenIdConnectParameterNames.ExpiresIn,
-                    Value=DateTimeOffset.UtcNow.AddSeconds(token.ExpiresIn).ToString()
-                }
-            };
 
-            var result = await _httpContextAccessor.HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme); //tekrar authenticate ediyoruz
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.AccessToken,
+                        Value=token.AccessToken
+                    },
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.RefreshToken,
+                        Value=token.RefreshToken
+                    },
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.ExpiresIn,
+                        Value=DateTimeOffset.UtcNow.AddSeconds(token.ExpiresIn).ToString()
+                    }
+                };
+
+            var result = await _httpContextAccessor.HttpContext.AuthenticateAsync(); //tekrar authenticate ediyoruz
 
             var properties = result.Properties;
             properties.StoreTokens(authenticationToken);
@@ -83,16 +83,16 @@ namespace MultiShop.WebUI.Services.Concrete
             {
                 Address = _serviceApiSettings.IdentityServerUrl,
                 Policy =
-                {
-                    RequireHttps = false
-                }
+                    {
+                        RequireHttps = false
+                    }
             });
             // Check if the discovery document was retrieved successfully
             var passwordTokenRequest = new PasswordTokenRequest
             {
                 Address = discoveryEndPoint.TokenEndpoint,
                 ClientId = _clientSettings.MultiShopManagerClient.ClientId,
-                ClientSecret = _clientSettings.MultiShopManagerClient.ClientSecrets,
+                ClientSecret = _clientSettings.MultiShopManagerClient.ClientSecret,
                 UserName = signInDto.Username,
                 Password = signInDto.Password
             };
@@ -115,22 +115,22 @@ namespace MultiShop.WebUI.Services.Concrete
             // Set the authentication properties
             authenticationProperties.StoreTokens(new List<AuthenticationToken>(){
 
-                new AuthenticationToken
-                {
-                    Name=OpenIdConnectParameterNames.AccessToken,
-                    Value=token.AccessToken
-                },
-                new AuthenticationToken
-                {
-                    Name=OpenIdConnectParameterNames.RefreshToken,
-                    Value=token.RefreshToken
-                },
-                new AuthenticationToken
-                {
-                    Name=OpenIdConnectParameterNames.ExpiresIn,
-                    Value=DateTimeOffset.UtcNow.AddSeconds(token.ExpiresIn).ToString()
-                }
-            });
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.AccessToken,
+                        Value=token.AccessToken
+                    },
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.RefreshToken,
+                        Value=token.RefreshToken
+                    },
+                    new AuthenticationToken
+                    {
+                        Name=OpenIdConnectParameterNames.ExpiresIn,
+                        Value=DateTime.Now.AddSeconds(token.ExpiresIn).ToString()
+                    }
+                });
 
             authenticationProperties.IsPersistent = false;
 

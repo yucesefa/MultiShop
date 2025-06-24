@@ -41,7 +41,7 @@ namespace MultiShop.WebUI.Services.Concrete
             {
                 Address = discoveryEndPoint.TokenEndpoint,
                 ClientId = _clientSettings.MultiShopVisitorClient.ClientId,
-                ClientSecret = _clientSettings.MultiShopVisitorClient.ClientSecrets,
+                ClientSecret = _clientSettings.MultiShopVisitorClient.ClientSecret,
             };
 
             var newToken = await _httpClient.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest);
