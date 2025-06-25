@@ -37,6 +37,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddHttpClient<IIdentityService, IdentityService>();
 
+
 builder.Services.AddHttpClient();
 builder.Services.AddControllersWithViews();
 

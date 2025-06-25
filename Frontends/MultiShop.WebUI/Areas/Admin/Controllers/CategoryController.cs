@@ -1,35 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MultiShop.Catalog.Services.CategoryServices;
 using MultiShop.DtoLayer.CatalogDtos.CategoryDtos;
+using MultiShop.WebUI.Services.CatalogServices.CategoryServices;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace MultiShop.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [AllowAnonymous]
     [Route("Admin/Category")]
     public class CategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public CategoryController(IHttpClientFactory httpClientFactory)
+        private readonly ICategoryService _categoryService;
+        public CategoryController(IHttpClientFactory httpClientFactory, ICategoryService categoryService)
         {
             _httpClientFactory = httpClientFactory;
+            _categoryService = categoryService;
         }
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
             CategoryViewbagList();
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7070/api/Categories");
-            if (responseMessage.IsSuccessStatusCode)
-            {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
-                return View(values);
-            }
-            return View();
+            var values = await _categoryService.GetAllCategoryAsync();
+            return View(values);
 
         }
 
