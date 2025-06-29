@@ -17,6 +17,10 @@
       {
         "Path": "ApiGateway\\MultiShop.OcelotGateway\\MultiShop.OcelotGateway.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "Services\\Comment\\MultiShop.Comment\\MultiShop.Comment.csproj",
+        "Action": "Start"
       }
     ]
   }
