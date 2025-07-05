@@ -14,7 +14,7 @@ namespace MultiShop.WebUI.Controllers
             _productService = productService;
             _basketService = basketService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(decimal totalNewPriceWithDiscount)
         {
             ViewBag.directory1 = "Ana Sayfa";
             ViewBag.directory2 = "Ürünler";
@@ -24,6 +24,7 @@ namespace MultiShop.WebUI.Controllers
             var totalPriceWithTax = values.TotalPrice + values.TotalPrice / 100 * 18;
             var tax = values.TotalPrice / 100 * 18;
             ViewBag.totalPriceWithTax = totalPriceWithTax;
+            ViewBag.totalNewPriceWithDiscount = totalNewPriceWithDiscount;
             ViewBag.tax = tax;
             return View(values);
         }
