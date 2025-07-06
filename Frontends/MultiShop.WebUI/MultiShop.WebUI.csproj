@@ -16,6 +16,20 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\User\Data\" />
+    <Folder Include="Areas\User\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\spica\css\.DS_Store" />
+    <None Include="wwwroot\spica\fonts\.DS_Store" />
+    <None Include="wwwroot\spica\fonts\Roboto\.DS_Store" />
+    <None Include="wwwroot\spica\images\.DS_Store" />
+    <None Include="wwwroot\spica\images\auth\.DS_Store" />
+    <None Include="wwwroot\spica\images\faces\.DS_Store" />
+    <None Include="wwwroot\spica\js\.DS_Store" />
+    <None Include="wwwroot\spica\pages\.DS_Store" />
+    <None Include="wwwroot\spica\vendors\.DS_Store" />
   </ItemGroup>
 
   <ItemGroup>
