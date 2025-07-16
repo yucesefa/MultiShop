@@ -41,6 +41,10 @@
       {
         "Path": "Services\\Cargo\\MultiShop.Cargo.WebApi\\MultiShop.Cargo.WebApi.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "Services\\SignalRRealTime\\MultiShop.SignalRRealTimeApi\\MultiShop.SignalRRealTimeApi.csproj",
+        "Action": "Start"
       }
     ]
   }
